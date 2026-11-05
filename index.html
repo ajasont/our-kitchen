@@ -10,14 +10,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#fafaf8; --surface:#f1f0ec; --ink:#1b1b1a; --muted:#73726e; --line:#e3e2de;
+    --bg:#f6f4ef; --surface:#ebe8e2; --ink:#1b1b1a; --muted:#64635e; --line:rgba(27,27,26,.14);
+    --stone:url(marble-light.jpg); --veil:rgba(246,244,239,.32);
     --u:8px; --gap:calc(var(--u)*2); --max:1152px; --cols:4;
   }
   @media (prefers-color-scheme:dark){
-    :root{--bg:#141413;--surface:#1f1f1d;--ink:#ededea;--muted:#9a9993;--line:#2e2e2b}
+    :root{--bg:#1d1d1c;--surface:#262624;--ink:#efeeea;--muted:#a6a59f;--line:rgba(239,238,234,.16);
+      --stone:url(marble-dark.jpg);--veil:rgba(29,29,28,.28)}
   }
   *{box-sizing:border-box}
-  html,body{margin:0;background:var(--bg);color:var(--ink);
+  html{background:var(--bg)}
+  body{background:linear-gradient(var(--veil),var(--veil)),var(--stone) 0 0/1024px 1024px repeat,var(--bg);
+    background-attachment:fixed}
+  html,body{margin:0;color:var(--ink);
     font:400 15px/1.6 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
     -webkit-font-smoothing:antialiased;font-feature-settings:"tnum" 1}
   button{font:inherit;color:inherit}
@@ -35,7 +40,8 @@
   .stat b{display:block;font-size:20px;font-weight:600;line-height:1.3}
 
   /* Nav: centered text links, one rule above and below */
-  nav{position:sticky;top:0;z-index:5;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 84%,transparent);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   nav .wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:0 calc(var(--u)*3)}
   .tab{background:none;border:0;padding:calc(var(--u)*1.75) 0;cursor:pointer;font-size:13px;font-weight:500;
     color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
@@ -86,6 +92,7 @@
   .lb button:hover{color:var(--muted)}
 
   @media (max-width:960px){:root{--cols:3}}
+  @media (hover:none){body{background-attachment:scroll}}
   @media (max-width:640px){
     :root{--cols:2;--gap:12px}
     header.wrap{padding-top:calc(var(--u)*6)}
