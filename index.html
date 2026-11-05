@@ -7,85 +7,108 @@
 <meta name="description" content="Home cooking, sorted by cuisine.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#fbf6ef; --card:#fff; --ink:#2b2118; --muted:#7a6a5b; --line:#eadfd1;
-    --accent:#c4512b; --accent-ink:#fff; --chip:#f3e8db;
-    --radius:16px; --shadow:0 1px 2px rgba(60,40,20,.06),0 6px 20px rgba(60,40,20,.08);
+    --bg:#fafaf8; --surface:#f1f0ec; --ink:#1b1b1a; --muted:#73726e; --line:#e3e2de;
+    --u:8px; --gap:calc(var(--u)*2); --max:1152px; --cols:4;
   }
   @media (prefers-color-scheme:dark){
-    :root{--bg:#17120e;--card:#211a14;--ink:#f3ebe2;--muted:#b3a291;--line:#33291f;--chip:#2b2219;--accent:#e2774f;
-      --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35)}
+    :root{--bg:#141413;--surface:#1f1f1d;--ink:#ededea;--muted:#9a9993;--line:#2e2e2b}
   }
   *{box-sizing:border-box}
-  html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-  a{color:inherit}
-  .wrap{max-width:1200px;margin:0 auto;padding:0 20px}
-  header{padding:56px 0 28px}
-  h1{font-family:Fraunces,Georgia,serif;font-weight:800;font-size:clamp(40px,7vw,72px);line-height:1;margin:0;letter-spacing:-.02em}
-  h1 span{color:var(--accent)}
-  .sub{color:var(--muted);font-size:18px;margin:12px 0 0;max-width:620px}
-  .stats{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap}
-  .stat b{display:block;font-family:Fraunces,Georgia,serif;font-size:28px;line-height:1.1}
-  .stat span{color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
-  nav.chips{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);padding:12px 0}
-  nav.chips .wrap{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
-  nav.chips .wrap::-webkit-scrollbar{display:none}
-  .chip{flex:none;border:0;background:var(--chip);color:var(--ink);padding:8px 14px;border-radius:999px;font:500 14px Inter,system-ui,sans-serif;cursor:pointer;white-space:nowrap}
-  .chip small{color:var(--muted);margin-left:6px}
-  .chip[aria-pressed=true]{background:var(--accent);color:var(--accent-ink)}
-  .chip[aria-pressed=true] small{color:inherit;opacity:.8}
-  section{padding:34px 0 8px}
-  h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:28px;margin:0}
-  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:4px}
-  .sec-head button{background:none;border:0;color:var(--accent);font:600 14px Inter,system-ui,sans-serif;cursor:pointer;padding:0}
-  .blurb{color:var(--muted);margin:0 0 16px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
-  .tile{position:relative;border:0;padding:0;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;aspect-ratio:1/1;display:block;width:100%}
-  .tile img{width:100%;height:100%;object-fit:cover;display:block;background:var(--chip);transition:transform .4s ease}
-  .tile:hover img,.tile:focus-visible img{transform:scale(1.04)}
-  .tile:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-  .badge{position:absolute;right:10px;top:10px;background:rgba(0,0,0,.6);color:#fff;font:600 12px Inter,system-ui,sans-serif;padding:3px 8px;border-radius:999px}
-  .date{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.55);color:#fff;font:500 12px Inter,system-ui,sans-serif;padding:3px 8px;border-radius:999px}
-  .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-  .cat{display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch;border:0;padding:0;text-align:left;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;color:inherit;font:inherit}
-  .cat .mosaic{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:2px;aspect-ratio:3/2;overflow:hidden;width:100%}
-  .cat .mosaic img{width:100%;height:100%;min-height:0;object-fit:cover;display:block;background:var(--chip)}
-  .cat .mosaic img:first-child{grid-row:span 2}
-  .cat .meta{padding:14px 16px 16px}
-  .cat h3{font-family:Fraunces,Georgia,serif;font-size:21px;margin:0 0 2px}
-  .cat p{margin:0;color:var(--muted);font-size:14px}
-  .more{display:block;margin:22px auto 0;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:10px 18px;border-radius:999px;font:600 14px Inter,system-ui,sans-serif;cursor:pointer}
-  footer{color:var(--muted);font-size:13px;padding:48px 0 40px;text-align:center}
-  /* lightbox */
-  .lb{position:fixed;inset:0;background:rgba(10,8,6,.94);display:none;z-index:20;align-items:center;justify-content:center}
-  .lb.open{display:flex}
-  .lb img{max-width:min(92vw,1100px);max-height:82vh;border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
-  .lb .cap{position:absolute;left:0;right:0;bottom:18px;text-align:center;color:#eee;font-size:14px}
-  .lb button{position:absolute;background:rgba(255,255,255,.12);color:#fff;border:0;width:48px;height:48px;border-radius:50%;font-size:24px;cursor:pointer}
-  .lb button:hover{background:rgba(255,255,255,.22)}
-  .lb .x{top:16px;right:16px}.lb .prev{left:16px;top:50%;transform:translateY(-50%)}.lb .next{right:16px;top:50%;transform:translateY(-50%)}
-  @media (max-width:600px){.grid{grid-template-columns:repeat(2,1fr);gap:8px}.tile{border-radius:12px}header{padding-top:36px}}
+  html,body{margin:0;background:var(--bg);color:var(--ink);
+    font:400 15px/1.6 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;font-feature-settings:"tnum" 1}
+  button{font:inherit;color:inherit}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 calc(var(--u)*3)}
+  .label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+  /* Header: centered, three equal stat columns */
+  header.wrap{text-align:center;padding-top:calc(var(--u)*10);padding-bottom:calc(var(--u)*6)}
+  h1{font-size:32px;font-weight:600;letter-spacing:-.01em;line-height:1.2;margin:calc(var(--u)*1.5) 0 0}
+  .sub{max-width:480px;margin:calc(var(--u)*1.5) auto 0;color:var(--muted)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);max-width:480px;margin:calc(var(--u)*5) auto 0;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stat{padding:calc(var(--u)*2) 0}
+  .stat + .stat{border-left:1px solid var(--line)}
+  .stat b{display:block;font-size:20px;font-weight:600;line-height:1.3}
+
+  /* Nav: centered text links, one rule above and below */
+  nav{position:sticky;top:0;z-index:5;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:0 calc(var(--u)*3)}
+  .tab{background:none;border:0;padding:calc(var(--u)*1.75) 0;cursor:pointer;font-size:13px;font-weight:500;
+    color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+  .tab:hover{color:var(--ink)}
+  .tab[aria-current=true]{color:var(--ink);border-bottom-color:var(--ink)}
+  .tab:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+  /* Sections */
+  section{padding:calc(var(--u)*8) 0 0}
+  .head{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:var(--gap);
+    padding-bottom:calc(var(--u)*2);margin-bottom:calc(var(--u)*3);border-bottom:1px solid var(--line)}
+  .head .l{justify-self:start}.head .r{justify-self:end}
+  h2{font-size:20px;font-weight:600;margin:0;text-align:center;line-height:1.3}
+  .back{background:none;border:0;padding:0;cursor:pointer}
+  .back:hover{color:var(--ink)}
+
+  /* One grid for everything */
+  .grid{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));gap:calc(var(--u)*4) var(--gap)}
+  .grid.even{display:flex;flex-wrap:wrap;justify-content:center}
+  .grid.even > .item{width:calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols))}
+  .item{display:block;width:100%;background:none;border:0;padding:0;text-align:left;cursor:pointer}
+  .item:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+  .frame{aspect-ratio:1/1;overflow:hidden;background:var(--surface)}
+  .frame img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s}
+  .item:hover img{opacity:.88}
+  .cap{display:flex;justify-content:space-between;gap:var(--u);margin-top:var(--u);font-size:13px}
+  .cap span:last-child{color:var(--muted)}
+  .item.cat .cap{display:block;text-align:center;margin-top:calc(var(--u)*1.5)}
+  .item.cat .cap b{display:block;font-weight:500;font-size:14px}
+  .item.cat .cap span{color:var(--muted);font-size:12px}
+
+  .more{display:block;margin:calc(var(--u)*6) auto 0;background:none;border:1px solid var(--ink);
+    padding:calc(var(--u)*1.25) calc(var(--u)*4);cursor:pointer;font-size:13px;font-weight:500}
+  .more:hover{background:var(--ink);color:var(--bg)}
+  footer.wrap{text-align:center;padding-top:calc(var(--u)*10);padding-bottom:calc(var(--u)*6)}
+
+  /* Lightbox */
+  .lb{position:fixed;inset:0;background:var(--bg);display:none;z-index:20;
+    grid-template-rows:auto 1fr auto;padding:calc(var(--u)*3)}
+  .lb.open{display:grid}
+  .lb-top,.lb-bot{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+  .lb-top .r{justify-self:end}
+  .lb-stage{display:flex;align-items:center;justify-content:center;min-height:0;padding:calc(var(--u)*3) 0}
+  .lb-stage img{max-width:100%;max-height:100%;object-fit:contain}
+  .lb-bot{justify-items:center}
+  .lb-bot .l{justify-self:start}.lb-bot .r{justify-self:end}
+  .lb button{background:none;border:0;cursor:pointer;padding:var(--u);font-size:13px;font-weight:500}
+  .lb button:hover{color:var(--muted)}
+
+  @media (max-width:960px){:root{--cols:3}}
+  @media (max-width:640px){
+    :root{--cols:2;--gap:12px}
+    header.wrap{padding-top:calc(var(--u)*6)}
+    nav .wrap{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scrollbar-width:none}
+    nav .wrap::-webkit-scrollbar{display:none}
+  }
 </style>
 </head>
 <body>
 <header class="wrap">
+  <div class="label">Home cooking</div>
   <h1 id="title">Our Kitchen</h1>
   <p class="sub" id="subtitle"></p>
   <div class="stats" id="stats"></div>
 </header>
-<nav class="chips" aria-label="Cuisines"><div class="wrap" id="chips"></div></nav>
+<nav aria-label="Sections"><div class="wrap" id="tabs"></div></nav>
 <main class="wrap" id="main"></main>
-<footer class="wrap" id="foot"></footer>
+<footer class="wrap label" id="foot"></footer>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
-  <img id="lb-img" alt="">
-  <div class="cap" id="lb-cap"></div>
-  <button class="x" id="lb-x" aria-label="Close">&times;</button>
-  <button class="prev" id="lb-prev" aria-label="Previous photo">&#8249;</button>
-  <button class="next" id="lb-next" aria-label="Next photo">&#8250;</button>
+  <div class="lb-top"><span class="label" id="lb-cat"></span><span></span><button class="r" id="lb-x">Close</button></div>
+  <div class="lb-stage"><img id="lb-img" alt=""></div>
+  <div class="lb-bot"><button class="l" id="lb-prev">&larr; Previous</button><span class="label" id="lb-cap"></span><button class="r" id="lb-next">Next &rarr;</button></div>
 </div>
 
 <script src="data.js"></script>
@@ -98,52 +121,52 @@
   const fmt = d => new Date(d + "T12:00:00").toLocaleDateString(undefined, {month:"short", year:"numeric"});
   const thumb = u => "thumbs/" + u + ".jpg", photo = u => "photos/" + u + ".jpg";
   const nPhotos = K.dishes.reduce((a, d) => a + d.photos.length, 0);
+  const plural = (n, w) => n.toLocaleString() + " " + w + (n === 1 ? "" : "s");
 
-  // Title: color the last word.
-  const t = K.title.split(" "); const last = t.pop();
-  $("#title").innerHTML = (t.length ? t.join(" ") + " " : "") + "<span>" + last + "</span>";
   document.title = K.title;
+  $("#title").textContent = K.title;
   $("#subtitle").textContent = K.subtitle;
-  $("#stats").innerHTML = [[K.dishes.length.toLocaleString(), "dishes"], [nPhotos.toLocaleString(), "photos"], [cats.length, "cuisines"]]
-    .map(([b, s]) => `<div class="stat"><b>${b}</b><span>${s}</span></div>`).join("");
-  $("#foot").textContent = "Made at home. Updated " + K.updated + ".";
+  $("#stats").innerHTML = [[K.dishes.length, "Dishes"], [nPhotos, "Photos"], [cats.length, "Sections"]]
+    .map(([b, s]) => `<div class="stat"><b>${b.toLocaleString()}</b><span class="label">${s}</span></div>`).join("");
+  $("#foot").textContent = "Made at home · Updated " + K.updated;
 
-  // Chips
   let current = "all";
-  function chips(){
-    $("#chips").innerHTML = `<button class="chip" data-c="all" aria-pressed="${current==='all'}">All</button>` +
-      cats.map(c => `<button class="chip" data-c="${c.code}" aria-pressed="${current===c.code}">${c.name}<small>${c.dishes.length}</small></button>`).join("");
+  function tabs(){
+    $("#tabs").innerHTML = `<button class="tab" data-c="all" aria-current="${current==='all'}">All</button>` +
+      cats.map(c => `<button class="tab" data-c="${c.code}" aria-current="${current===c.code}">${c.name}</button>`).join("");
+    const a = $("#tabs .tab[aria-current=true]"), w = $("#tabs");
+    if (a && w.scrollWidth > w.clientWidth) w.scrollLeft = a.offsetLeft - (w.clientWidth - a.offsetWidth) / 2;
   }
-  $("#chips").addEventListener("click", e => { const b = e.target.closest(".chip"); if (b) go(b.dataset.c); });
+  $("#tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) go(b.dataset.c); });
 
-  function tile(d){
+  const head = (title, left, right) =>
+    `<div class="head"><span class="l">${left || ""}</span><h2>${title}</h2><span class="r label">${right || ""}</span></div>`;
+
+  function dishItem(d){
     const n = d.photos.length;
-    return `<button class="tile" data-d="${K.dishes.indexOf(d)}" aria-label="${byCode[d.cat].name}, ${fmt(d.date)}${n>1?`, ${n} photos`:''}">
-      <img loading="lazy" src="${thumb(d.photos[0])}" alt="">
-      ${n > 1 ? `<span class="badge">${n}</span>` : ""}<span class="date">${fmt(d.date)}</span></button>`;
+    return `<button class="item" data-d="${K.dishes.indexOf(d)}" aria-label="${byCode[d.cat].name}, ${fmt(d.date)}${n>1?`, ${n} photos`:''}">
+      <div class="frame"><img loading="lazy" src="${thumb(d.photos[0])}" alt=""></div>
+      <div class="cap"><span>${fmt(d.date)}</span><span>${n > 1 ? n + " photos" : ""}</span></div></button>`;
   }
 
   function home(){
     const latest = K.dishes.slice(0, 8);
     $("#main").innerHTML = `
-      <section><div class="sec-head"><h2>Fresh off the stove</h2></div><p class="blurb">The latest things we made.</p>
-        <div class="grid">${latest.map(tile).join("")}</div></section>
-      <section><div class="sec-head"><h2>Browse by cuisine</h2></div><p class="blurb">Pick a section to see everything in it.</p>
-        <div class="cats">${cats.map(c => {
-          const pics = c.dishes.slice(0, 3).map(d => d.photos[0]);
-          while (pics.length < 3) pics.push(pics[0]);
-          return `<button class="cat" data-c="${c.code}"><div class="mosaic">${pics.map(u => `<img loading="lazy" src="${thumb(u)}" alt="">`).join("")}</div>
-            <div class="meta"><h3>${c.name}</h3><p>${c.dishes.length} dishes &middot; ${c.blurb}</p></div></button>`;
-        }).join("")}</div></section>`;
+      <section>${head("Latest", "", "")}<div class="grid">${latest.map(dishItem).join("")}</div></section>
+      <section>${head("Sections", "", "")}<div class="grid even">${cats.map(c => `
+        <button class="item cat" data-c="${c.code}">
+          <div class="frame"><img loading="lazy" src="${thumb(c.dishes[0].photos[0])}" alt=""></div>
+          <div class="cap"><b>${c.name}</b><span>${plural(c.dishes.length, "dish").replace("dishs","dishes")}</span></div>
+        </button>`).join("")}</div></section>`;
   }
 
   const PAGE = 48;
   function category(code){
     const c = byCode[code]; let shown = PAGE;
     const render = () => {
-      $("#main").innerHTML = `<section><div class="sec-head"><h2>${c.name}</h2><button data-c="all">&larr; All cuisines</button></div>
-        <p class="blurb">${c.blurb} ${c.dishes.length} dishes.</p>
-        <div class="grid">${c.dishes.slice(0, shown).map(tile).join("")}</div>
+      $("#main").innerHTML = `<section>${head(c.name, `<button class="back label" data-c="all">&larr; All</button>`,
+          plural(c.dishes.length, "dish").replace("dishs","dishes"))}
+        <div class="grid">${c.dishes.slice(0, shown).map(dishItem).join("")}</div>
         ${shown < c.dishes.length ? `<button class="more" id="more">Show more</button>` : ""}</section>`;
       const m = $("#more"); if (m) m.onclick = () => { shown += PAGE; render(); };
     };
@@ -152,33 +175,35 @@
 
   function go(code, push = true){
     current = byCode[code] ? code : "all";
-    chips();
+    tabs();
     current === "all" ? home() : category(current);
-    if (push) history.pushState(null, "", current === "all" ? location.pathname : "#" + current);
-    if (push) document.querySelector("nav.chips").scrollIntoView({behavior: "smooth"});
+    if (push) {
+      history.pushState(null, "", current === "all" ? location.pathname : "#" + current);
+      const h = document.querySelector("header"), top = h.offsetTop + h.offsetHeight;
+      if (window.scrollY > top) window.scrollTo({top});
+    }
   }
   window.addEventListener("popstate", () => go(location.hash.slice(1), false));
 
   $("#main").addEventListener("click", e => {
-    const t = e.target.closest(".tile"); if (t) return openLb(+t.dataset.d);
+    const t = e.target.closest(".item[data-d]"); if (t) return openLb(+t.dataset.d);
     const c = e.target.closest("[data-c]"); if (c) go(c.dataset.c);
   });
 
   // Lightbox
   let lbD = null, lbI = 0, lastFocus = null;
   function show(){
-    const d = K.dishes[lbD];
+    const d = K.dishes[lbD], many = d.photos.length > 1;
     $("#lb-img").src = photo(d.photos[lbI]);
     $("#lb-img").alt = byCode[d.cat].name;
-    $("#lb-cap").textContent = `${byCode[d.cat].name} · ${fmt(d.date)}` + (d.photos.length > 1 ? ` · ${lbI + 1} of ${d.photos.length}` : "");
-    const many = d.photos.length > 1;
-    $("#lb-prev").style.display = $("#lb-next").style.display = many ? "" : "none";
+    $("#lb-cat").textContent = byCode[d.cat].name;
+    $("#lb-cap").textContent = fmt(d.date) + (many ? ` · ${lbI + 1} / ${d.photos.length}` : "");
+    $("#lb-prev").style.visibility = $("#lb-next").style.visibility = many ? "visible" : "hidden";
   }
-  function openLb(i){ lastFocus = document.activeElement; lbD = i; lbI = 0; show(); $("#lb").classList.add("open"); $("#lb-x").focus(); }
-  function closeLb(){ $("#lb").classList.remove("open"); lbD = null; if (lastFocus) lastFocus.focus(); }
+  function openLb(i){ lastFocus = document.activeElement; lbD = i; lbI = 0; show(); $("#lb").classList.add("open"); document.body.style.overflow = "hidden"; $("#lb-x").focus(); }
+  function closeLb(){ $("#lb").classList.remove("open"); document.body.style.overflow = ""; lbD = null; if (lastFocus) lastFocus.focus(); }
   function step(n){ const d = K.dishes[lbD]; lbI = (lbI + n + d.photos.length) % d.photos.length; show(); }
   $("#lb-x").onclick = closeLb; $("#lb-prev").onclick = () => step(-1); $("#lb-next").onclick = () => step(1);
-  $("#lb").addEventListener("click", e => { if (e.target.id === "lb") closeLb(); });
   document.addEventListener("keydown", e => {
     if (lbD === null) return;
     if (e.key === "Escape") closeLb(); else if (e.key === "ArrowLeft") step(-1); else if (e.key === "ArrowRight") step(1);
